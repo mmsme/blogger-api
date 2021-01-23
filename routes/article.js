@@ -77,21 +77,35 @@ router.get("/tag/:tag", auth, async (req, res, next) => {
 router.patch("/img/:id", auth, imageFile, async (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
   try {
-    const article = await Article.updateImage(req.params.id, {
+    const article = await Article.findArticleByID(req.params.id);
+
+    // check author
+    if (article.auther != req.user.id) {
+      res.send("Access Deniad");
+      return;
+    }
+    const updated = await Article.updateImage(req.params.id, {
       image: url + "/images/" + req.file.filename,
     });
 
-    res.json(article);
+    res.json(updated);
   } catch (e) {
     next(e);
   }
 });
 
 router.patch("/content/:id", auth, async (req, res, next) => {
-  console.log(req.body);
   try {
-    const article = await Article.updateArticle(req.params.id, req.body);
-    res.json(article);
+    const article = await Article.findArticleByID(req.params.id);
+
+    // check author
+    if (article.auther != req.user.id) {
+      res.send("Access Deniad");
+      return;
+    }
+
+    const updated = await Article.updateArticle(req.params.id, req.body);
+    res.json(updated);
   } catch (e) {
     next(e);
   }
@@ -99,6 +113,14 @@ router.patch("/content/:id", auth, async (req, res, next) => {
 
 router.delete("/:id", auth, async (req, res, next) => {
   try {
+    const article = await Article.findArticleByID(req.params.id);
+
+    // check author
+    if (article.auther != req.user.id) {
+      res.send("Access Deniad");
+      return;
+    }
+
     const response = await Article.deleteArticle(req.params.id);
     res.json(response);
   } catch (e) {
