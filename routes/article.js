@@ -5,15 +5,6 @@ const auth = require("../middlewares/auth");
 const imageFile = require("../middlewares/img");
 const User = require("../controllers/user");
 
-router.get("/", async (req, res, next) => {
-  try {
-    const articles = await Article.getAllAricles();
-    res.json(articles);
-  } catch (e) {
-    next(e);
-  }
-});
-
 router.post("/", auth, imageFile, async (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
   // body {title, body{img, content}, tages} || req.user {}
@@ -27,6 +18,15 @@ router.post("/", auth, imageFile, async (req, res, next) => {
       tages: req.body.tages,
     });
     res.json(article);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get("/", async (req, res, next) => {
+  try {
+    const articles = await Article.getAllAricles();
+    res.json(articles);
   } catch (e) {
     next(e);
   }
