@@ -19,13 +19,20 @@ const findArticleByTitle = (title) => Article.find({ title: title });
 const findArticleByTag = (tag) => Article.find({ tages: tag });
 
 // update Article
-const updateImage = (id, imgPath) =>
-  Article.findByIdAndUpdate(id, imgPath, { new: true });
+const updateImage = (id, imgPath) =>{
+  deleteImageByArticleID(id);
+  return Article.findByIdAndUpdate(id, imgPath, { new: true });
+}
 
 const updateArticle = (id, content) =>
   Article.findByIdAndUpdate(id, content, { new: true });
 
 const deleteArticle = async (id) => {
+  deleteImageByArticleID(id);
+  return Article.findByIdAndDelete(id);
+};
+
+function deleteImageByArticleID(id){
   const { image } = await Article.findById(id).exec();
 
   const imgPath = image.split("/");
@@ -38,9 +45,7 @@ const deleteArticle = async (id) => {
   } catch (err) {
     console.error(err);
   }
-
-  return Article.findByIdAndDelete(id);
-};
+}
 
 module.exports = {
   creatArticle,
