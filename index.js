@@ -35,6 +35,25 @@ app.use("*", (req, res, next) => {
   res.status(404).json({ err: "NOT_FOUND" });
 });
 
+app.use((err, req, res, next) => {
+  // Map the error and send it to user
+  // instanceof
+  // Check if this err is a mongoose err using instanceof
+
+  if (err instanceof mongoose.Error.ValidationError) {
+    return res.status(422).json(err.errors);
+  }
+  if (err.code === 11000) {
+    res
+      .status(422)
+      .json({ statusCode: "ValidationError", property: err.keyValue });
+  }
+  if (err.message === "UN_AUTHENTICATED") {
+    res.status(401).json({ statusCode: "UN_AUTHENTICATED" });
+  }
+  res.status(503).end();
+});
+
 const { PORT = 8080 } = process.env;
 app.listen(PORT, () => {
   console.log("listen to port", PORT);
