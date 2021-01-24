@@ -6,4 +6,6 @@ const article = require("../routes/article");
 router.use("/user", user);
 router.use("/article", article);
 
+console.log("helllo");
+
 module.exports = router;
