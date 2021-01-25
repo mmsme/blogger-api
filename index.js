@@ -26,6 +26,8 @@ mongoose
   .then(() => console.log("Database Connected Successfully"))
   .catch((err) => console.log(err));
 
+// mongoose.connect("mongodb://localhost/test", { useNewUrlParser: true });
+
 app.use(express.json());
 app.use("/images", express.static(path.join("images")));
 
@@ -54,7 +56,7 @@ app.use((err, req, res, next) => {
   res.status(503).end();
 });
 
-const { PORT = 8080 } = process.env;
+const { PORT = 3000 } = process.env;
 app.listen(PORT, () => {
   console.log("listen to port", PORT);
 });

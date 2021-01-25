@@ -24,8 +24,9 @@ const updateImage = (id, imgPath) => {
   return Article.findByIdAndUpdate(id, imgPath, { new: true });
 };
 
-const updateArticle = (id, content) =>
-  Article.findByIdAndUpdate(id, content, { new: true });
+const updateArticle = (id, content) => {
+  return Article.findByIdAndUpdate(id, content, { new: true });
+};
 
 const deleteArticle = async (id) => {
   deleteImageByArticleID(id);

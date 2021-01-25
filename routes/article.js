@@ -74,7 +74,7 @@ router.get("/tag/:tag", auth, async (req, res, next) => {
   }
 });
 
-router.patch("/img/:id", auth, imageFile, async (req, res, next) => {
+router.patch("/update/img/:id", auth, imageFile, async (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
   try {
     const article = await Article.findArticleByID(req.params.id);
@@ -94,15 +94,17 @@ router.patch("/img/:id", auth, imageFile, async (req, res, next) => {
   }
 });
 
-router.patch("/content/:id", auth, async (req, res, next) => {
+router.patch("/update/content/:id", auth, async (req, res, next) => {
   try {
     const article = await Article.findArticleByID(req.params.id);
-
+    console.log(article);
     // check author
     if (article.auther != req.user.id) {
       res.send("Access Deniad");
       return;
     }
+
+    console.log(req.body);
 
     const updated = await Article.updateArticle(req.params.id, req.body);
     res.json(updated);

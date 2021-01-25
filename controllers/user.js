@@ -34,7 +34,7 @@ const login = async ({ username, password }) => {
     { expiresIn: "1d" }
   );
 
-  return { ...user.toJOIN, token };
+  return { ...user.toJSON(), token };
 };
 
 // find user by id and update user with findByIdAndUpdate function
