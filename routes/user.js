@@ -52,7 +52,7 @@ router.post("/login", async (req, res, next) => {
 });
 
 // update user information
-router.patch("/", auth, async (req, res, next) => {
+router.patch("/update", auth, async (req, res, next) => {
   const Id = req.user.id;
   const body = req.body;
 
