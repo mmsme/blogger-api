@@ -8,6 +8,7 @@ const creatArticle = (article) => Article.create(article);
 
 // find specific Article
 const findArticleByID = (id) => Article.findById(id);
+
 // find specific Article by Author{
 const findArticleByAuthor = (auther) =>
   Article.find({ auther: auther }).populate("auther").exec();
