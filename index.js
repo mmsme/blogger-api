@@ -50,8 +50,8 @@ app.use((err, req, res, next) => {
       .status(422)
       .json({ statusCode: "ValidationError", property: err.keyValue });
   }
-  if (err.message === "UN_AUTHENTICATED") {
-    res.status(401).json({ statusCode: "UN_AUTHENTICATED" });
+  if (err.message != "") {
+    res.status(401).json({ statusCode: err.message });
   }
   res.status(503).end();
 });
