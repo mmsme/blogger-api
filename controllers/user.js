@@ -17,13 +17,13 @@ const login = async ({ email, password }) => {
 
   // check if user is Authenticated
   if (!user) {
-    throw Error("UN_AUTHENTICATED");
+    throw Error("UN_AUTHENTICATED1");
   }
 
   // check if password is correct or not
   const validPassword = await user.validatePassword(password);
   if (!validPassword) {
-    throw Error("UN_AUTHENTICATED");
+    throw Error("UN_AUTHENTICATED2");
   }
 
   const token = await asyncSign(
