@@ -10,10 +10,13 @@ const getAllUsers = () => User.find({}).populate("follwers").exec();
 // take user info from body to create new user
 const create = (user) => User.create(user);
 
+// find user by name
+const findUserByName = (name) => User.findOne({ username: name });
+
 // login
 const login = async ({ username, password }) => {
   // search for user by username
-  const user = await User.findOne({ username }).exec();
+  const user = await findUserByName(username);
 
   // check if user is Authenticated
   if (!user) {
@@ -45,9 +48,6 @@ const login = async ({ username, password }) => {
 const updateUser = (id, data) => {
   return User.findByIdAndUpdate(id, data, { new: true }).exec();
 };
-
-// find user by name
-const findUserByName = (name) => User.findOne({ username: name });
 
 // find All user By Name
 const findUsersByName = (name) => User.find({ username: name });
