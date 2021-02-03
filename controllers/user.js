@@ -11,15 +11,16 @@ const getAllUsers = () => User.find({}).populate("follwers").exec();
 const create = (user) => User.create(user);
 
 // login
-const login = async ({ username, password }) => {
-  // search for user by name
-  const user = await User.findOne({ username }).exec();
-  // check if user in database
+const login = async ({ email, password }) => {
+  // search for user by username
+  const user = await User.findOne({ email }).exec();
+
+  // check if user is Authenticated
   if (!user) {
     throw Error("UN_AUTHENTICATED");
   }
 
-  // check if password is correct
+  // check if password is correct or not
   const validPassword = await user.validatePassword(password);
   if (!validPassword) {
     throw Error("UN_AUTHENTICATED");
@@ -28,14 +29,29 @@ const login = async ({ username, password }) => {
   const token = await asyncSign(
     {
       username: user.username,
+      email: user.email,
       id: user.id,
     },
     "SECURE",
     { expiresIn: "1d" }
   );
 
-  return { ...user.toJSON(), token };
+  console.log(token);
+
+  return { ...user.toJSON, token };
 };
+
+const user = await User.findOne({ username });
+// validate
+if (!user) {
+  throw Error("Wrong Username");
+}
+const ValidPass = user.validatePassword(password);
+// validate
+if (!ValidPass) {
+  throw Error("Wrong Password");
+}
+// validate
 
 // find user by id and update user with findByIdAndUpdate function
 const updateUser = (id, data) => {

@@ -18,6 +18,7 @@ const auth = async (req, res, next) => {
     const { id } = await asyncVerify(authorization, "SECURE");
     const user = await User.findById(id).exec();
     req.user = user;
+
     next();
   } catch (e) {
     next(new Error("UN_AUTHENTICATED"));
