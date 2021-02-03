@@ -5,7 +5,7 @@ const auth = require("../middlewares/auth");
 const imageFile = require("../middlewares/img");
 const User = require("../controllers/user");
 
-router.post("/", auth, imageFile, async (req, res, next) => {
+router.post("/create", auth, imageFile, async (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
   // body {title, body{img, content}, tages} || req.user {}
 
