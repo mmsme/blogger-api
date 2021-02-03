@@ -41,18 +41,6 @@ const login = async ({ email, password }) => {
   return { ...user.toJSON, token };
 };
 
-const user = await User.findOne({ username });
-// validate
-if (!user) {
-  throw Error("Wrong Username");
-}
-const ValidPass = user.validatePassword(password);
-// validate
-if (!ValidPass) {
-  throw Error("Wrong Password");
-}
-// validate
-
 // find user by id and update user with findByIdAndUpdate function
 const updateUser = (id, data) => {
   return User.findByIdAndUpdate(id, data, { new: true }).exec();
