@@ -38,7 +38,7 @@ const login = async ({ email, password }) => {
 
   console.log(token);
 
-  return { ...user.toJSON, token };
+  return { ...user.toJSON(), token };
 };
 
 // find user by id and update user with findByIdAndUpdate function
