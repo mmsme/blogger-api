@@ -11,9 +11,9 @@ const getAllUsers = () => User.find({}).populate("follwers").exec();
 const create = (user) => User.create(user);
 
 // login
-const login = async ({ email, password }) => {
+const login = async ({ username, password }) => {
   // search for user by username
-  const user = await User.findOne({ email }).exec();
+  const user = await User.findOne({ username }).exec();
 
   // check if user is Authenticated
   if (!user) {
