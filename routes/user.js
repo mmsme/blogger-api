@@ -67,11 +67,13 @@ router.patch("/update", auth, async (req, res, next) => {
 // find user by Username
 router.get("/name/:username", auth, async (req, res, next) => {
   try {
-    console.log(req.user.id);
+    if (!req.params.username) {
+      console.log("invalid");
+    }
     const user = await User.findUsersByName(req.params.username);
-
     res.json(user);
   } catch (e) {
+    console.log(e);
     next(e);
   }
 });
@@ -100,9 +102,9 @@ router.get("/followers", auth, async (req, res, next) => {
 router.get("/:id", auth, async (req, res, next) => {
   try {
     const user = await User.findUserById(req.params.id);
-
     res.json(user);
   } catch (e) {
+    console.log(e);
     next(e);
   }
 });

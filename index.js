@@ -4,17 +4,6 @@ const route = require("./routes/index");
 const path = require("path");
 const app = express();
 
-// const connection =
-//   "mongodb+srv://M_Mustafa:m3523m1998@cluster0.kr8bd.mongodb.net/bloggerDB?retryWrites=true&w=majority";
-// mongoose
-//   .connect(connection, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//     useFindAndModify: false,
-//   })
-//   .then(() => console.log("Database Connected Successfully"))
-//   .catch((err) => console.log(err));
-
 const uri =
   "mongodb+srv://M_Mustafa:m3523m1998@cluster0.kr8bd.mongodb.net/BloggerDB";
 mongoose
@@ -55,19 +44,28 @@ app.use((err, req, res, next) => {
   // Map the error and send it to user
   // instanceof
   // Check if this err is a mongoose err using instanceof
-
+  console.log(err);
   if (err instanceof mongoose.Error.ValidationError) {
+    console.log("from first if");
     return res.status(422).json(err.errors);
   }
+
   if (err.code === 11000) {
+    console.log("from Second If");
     res
       .status(422)
       .json({ statusCode: "ValidationError", property: err.keyValue });
   }
-  if (err.message != "") {
-    res.status(503).json({ statusCode: err.message });
+
+  if (err.status === 400) {
+    res.status(400).json({ type: err.type });
   }
-  res.status(503).end();
+
+  if (err.message === "UN_AUTHENTICATED") {
+    res.status(401).json({ statusCode: err.message });
+  }
+
+  res.send(err);
 });
 
 const { PORT = 3000 } = process.env;

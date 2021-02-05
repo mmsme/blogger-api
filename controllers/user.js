@@ -17,13 +17,13 @@ const login = async ({ username, password }) => {
 
   // check if user is Authenticated
   if (!user) {
-    throw Error("UN_AUTHENTICATED1");
+    throw Error("UN_AUTHENTICATED");
   }
 
   // check if password is correct or not
   const validPassword = await user.validatePassword(password);
   if (!validPassword) {
-    throw Error("UN_AUTHENTICATED2");
+    throw Error("UN_AUTHENTICATED");
   }
 
   const token = await asyncSign(
@@ -35,8 +35,6 @@ const login = async ({ username, password }) => {
     "SECURE",
     { expiresIn: "1d" }
   );
-
-  console.log(token);
 
   return { ...user.toJSON(), token };
 };
