@@ -31,6 +31,20 @@ mongoose
 app.use(express.json());
 app.use("/images", express.static(path.join("images")));
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+  );
+
+  next();
+});
+
 app.use("/", route);
 
 app.use("*", (req, res, next) => {
@@ -51,7 +65,7 @@ app.use((err, req, res, next) => {
       .json({ statusCode: "ValidationError", property: err.keyValue });
   }
   if (err.message != "") {
-    res.status(401).json({ statusCode: err.message });
+    res.status(503).json({ statusCode: err.message });
   }
   res.status(503).end();
 });
