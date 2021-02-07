@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const route = require("./routes/index");
-const path = require("path");
+
 const app = express();
 
 const uri =
@@ -18,7 +18,7 @@ mongoose
 // mongoose.connect("mongodb://localhost/test", { useNewUrlParser: true });
 
 app.use(express.json());
-app.use("/images", express.static(path.join("images")));
+// app.use("/images", express.static(path.join("images")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

@@ -4,24 +4,31 @@ const Article = require("../controllers/article");
 const auth = require("../middlewares/auth");
 const imageFile = require("../middlewares/img");
 const User = require("../controllers/user");
+const cloudinary = require("../middlewares/cloudinary");
 
-router.post("/create", auth, imageFile, async (req, res, next) => {
-  const url = req.protocol + "://" + req.get("host");
-  // body {title, body{img, content}, tages} || req.user {}
+router.post(
+  "/create",
+  auth,
+  imageFile.single("image"),
+  async (req, res, next) => {
+    try {
+      console.log(req.file.path);
+      const image = await cloudinary.uploader.upload(req.file.path);
 
-  try {
-    const article = await Article.creatArticle({
-      title: req.body.title,
-      content: req.body.content,
-      image: url + "/images/" + req.file.filename,
-      auther: req.user.id,
-      tages: req.body.tages,
-    });
-    res.json(article);
-  } catch (e) {
-    next(e);
+      const article = await Article.creatArticle({
+        title: req.body.title,
+        content: req.body.content,
+        image: image.url,
+        auther: req.user.id,
+        tages: req.body.tages,
+      });
+
+      res.json(article);
+    } catch (e) {
+      next(e);
+    }
   }
-});
+);
 
 router.get("/", async (req, res, next) => {
   try {
@@ -74,25 +81,30 @@ router.get("/tag/:tag", auth, async (req, res, next) => {
   }
 });
 
-router.patch("/update/img/:id", auth, imageFile, async (req, res, next) => {
-  const url = req.protocol + "://" + req.get("host");
-  try {
-    const article = await Article.findArticleByID(req.params.id);
+router.patch(
+  "/update/img/:id",
+  auth,
+  imageFile.single("image"),
+  async (req, res, next) => {
+    try {
+      const article = await Article.findArticleByID(req.params.id);
+      const img = await cloudinary.uploader.upload(req.file.path);
+      // check author
+      if (article.auther != req.user.id) {
+        res.send("Access Deniad");
+        return;
+      }
 
-    // check author
-    if (article.auther != req.user.id) {
-      res.send("Access Deniad");
-      return;
+      const updated = await Article.updateImage(req.params.id, {
+        image: img.url,
+      });
+
+      res.json(updated);
+    } catch (e) {
+      next(e);
     }
-    const updated = await Article.updateImage(req.params.id, {
-      image: url + "/images/" + req.file.filename,
-    });
-
-    res.json(updated);
-  } catch (e) {
-    next(e);
   }
-});
+);
 
 router.patch("/update/content/:id", auth, async (req, res, next) => {
   try {
