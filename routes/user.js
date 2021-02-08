@@ -184,4 +184,14 @@ router.delete("/delete", auth, async (req, res, next) => {
   }
 });
 
+// check usernam
+router.get("/isunique/:name", async (req, res, next) => {
+  try {
+    const isunique = await User.isUnique(req.params.name);
+    res.json(isunique);
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;

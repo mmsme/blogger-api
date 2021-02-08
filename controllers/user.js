@@ -60,6 +60,16 @@ const findMyFollowers = (followers) =>
 // delete user account
 const deleteUserByID = (id) => User.findByIdAndDelete(id);
 
+const isUnique = (username) => {
+  const res = User.findOne({ username: username });
+
+  if (res) {
+    return true;
+  }
+
+  return false;
+};
+
 module.exports = {
   getAllUsers,
   create,
@@ -70,4 +80,5 @@ module.exports = {
   findUsersByName,
   findMyFollowers,
   deleteUserByID,
+  isUnique,
 };
