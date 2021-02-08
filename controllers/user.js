@@ -60,10 +60,10 @@ const findMyFollowers = (followers) =>
 // delete user account
 const deleteUserByID = (id) => User.findByIdAndDelete(id);
 
-const isUnique = (username) => {
-  const res = User.findOne({ username: username });
-
-  if (res) {
+const isUnique = async (username) => {
+  const res = await User.findOne({ username: username }).exec();
+  console.log(res);
+  if (!res) {
     return true;
   }
 
