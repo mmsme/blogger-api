@@ -1,7 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const route = require("./routes/index");
+const cors = require("cors");
 
+app.use(cors());
 const app = express();
 
 const uri =
@@ -20,19 +22,19 @@ mongoose
 app.use(express.json());
 // app.use("/images", express.static(path.join("images")));
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-  );
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//   );
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+//   );
 
-  next();
-});
+//   next();
+// });
 
 app.use("/", route);
 
