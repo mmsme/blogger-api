@@ -2,9 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const route = require("./routes/index");
 const cors = require("cors");
+const app = express();
 
 app.use(cors());
-const app = express();
 
 const uri =
   "mongodb+srv://M_Mustafa:m3523m1998@cluster0.kr8bd.mongodb.net/BloggerDB";
