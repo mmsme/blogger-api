@@ -7,7 +7,19 @@ const getAllAricles = () => Article.find({}).populate("auther").exec();
 const creatArticle = (article) => Article.create(article);
 
 // find specific Article
-const findArticleByID = (id) => Article.findById(id);
+const findArticleByID = (id) => {
+  return Article.find({ _id: id })
+    .populate("auther")
+    .populate("comments")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "auther",
+        model: "User",
+      },
+    })
+    .exec();
+};
 
 // find specific Article by Author{
 const findArticleByAuthor = (auther) =>
