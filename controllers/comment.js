@@ -7,7 +7,7 @@ const createComment = (comment) =>
     .populate({
       path: "comments",
       populate: {
-        path: "author",
+        path: "auther",
         model: "User",
       },
     })
