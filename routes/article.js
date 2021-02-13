@@ -147,40 +147,23 @@ router.post("/like/:id", auth, async (req, res, next) => {
   try {
     const article = await Article.findArticleByID(req.params.id);
 
+    console.log(article);
+
     const index = article.likes.findIndex((c) => {
       return (req.user.id = c);
     });
 
     if (index == -1) {
       article.likes.push(req.user.id);
-      console.log(article);
       const update = await Article.updateArticle(req.params.id, article);
       res.json(update);
       return;
-    }
-
-    res.send("Already Liked");
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post("/unlike/:id", auth, async (req, res, next) => {
-  try {
-    const article = await Article.findArticleByID(req.params.id);
-
-    const index = article.likes.findIndex((c) => {
-      return (req.user.id = c);
-    });
-
-    if (index != -1) {
+    } else {
       article.likes.splice(index, 1);
       const update = await Article.updateArticle(req.params.id, article);
       res.json(update);
       return;
     }
-
-    res.send("Already UnLiked");
   } catch (error) {
     next(error);
   }
