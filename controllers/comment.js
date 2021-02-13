@@ -3,7 +3,7 @@ const Comment = require("../models/Comment");
 // create new Comment
 const createComment = (comment) =>
   Comment.create(comment)
-    .populate("author")
+    .populate("auther")
     .populate({
       path: "comments",
       populate: {
