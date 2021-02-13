@@ -3,8 +3,6 @@ const Comment = require("../models/Comment");
 // create new Comment
 const createComment = (comment) => {
   const res = Comment.create(comment);
-
-  console.log(res);
   return res;
 };
 // update Comment
