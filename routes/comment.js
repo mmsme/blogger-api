@@ -11,6 +11,10 @@ router.post("/add/:article", auth, async (req, res, next) => {
   const content = req.body.content;
   try {
     // save Comment In  DataBase
+    console.log({
+      content: content,
+      auther: auther,
+    });
     const commnet = await Comment.createComment({
       content: content,
       auther: auther,

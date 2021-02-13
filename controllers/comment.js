@@ -1,8 +1,12 @@
 const Comment = require("../models/Comment");
 
 // create new Comment
-const createComment = (comment) => Comment.create(comment).exec();
+const createComment = (comment) => {
+  const res = Comment.create(comment);
 
+  console.log(res);
+  return res;
+};
 // update Comment
 const updateComment = (id, comment) =>
   Comment.findByIdAndUpdate(id, comment, { new: true });

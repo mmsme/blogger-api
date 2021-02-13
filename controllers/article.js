@@ -8,7 +8,7 @@ const creatArticle = (article) => Article.create(article);
 
 // find specific Article
 const findArticleByID = (id) => {
-  return Article.find({ _id: id })
+  return Article.findById(id)
     .populate("auther")
     .populate("comments")
     .populate({
