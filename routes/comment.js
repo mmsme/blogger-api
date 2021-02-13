@@ -26,7 +26,6 @@ router.post("/add/:article", auth, async (req, res, next) => {
 
     // update article
     const update = await Article.updateArticle(articleId, article).exec();
-    console.log("After Update", update);
 
     res.json(update);
   } catch (error) {

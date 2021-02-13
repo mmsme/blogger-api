@@ -38,7 +38,16 @@ const updateImage = (id, imgPath) => {
 };
 
 const updateArticle = (id, content) => {
-  return Article.findByIdAndUpdate(id, content, { new: true });
+  return Article.findByIdAndUpdate(id, content, { new: true })
+    .populate("auther")
+    .populate("comments")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "auther",
+        model: "User",
+      },
+    });
 };
 
 const deleteArticle = async (id) => {
