@@ -5,6 +5,7 @@ const auth = require("../middlewares/auth");
 const imageFile = require("../middlewares/img");
 const User = require("../controllers/user");
 const cloudinary = require("../middlewares/cloudinary");
+const ArticleModel = require("../models/Article");
 
 router.post(
   "/create",
@@ -127,14 +128,6 @@ router.patch("/update/content/:id", auth, async (req, res, next) => {
 
 router.delete("/:id", auth, async (req, res, next) => {
   try {
-    const article = await Article.findArticleByID(req.params.id);
-
-    // check author
-    if (article.auther != req.user.id) {
-      res.send("Access Deniad");
-      return;
-    }
-
     const response = await Article.deleteArticle(req.params.id);
     res.json(response);
   } catch (e) {

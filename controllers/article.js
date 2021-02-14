@@ -51,8 +51,7 @@ const updateArticle = (id, content) => {
 };
 
 const deleteArticle = async (id) => {
-  deleteImageByArticleID(id);
-  return Article.findByIdAndDelete(id);
+  return Article.findByIdAndDelete(id).exec();
 };
 
 async function deleteImageByArticleID(id) {
