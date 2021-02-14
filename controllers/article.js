@@ -30,7 +30,8 @@ const findArticleByTitle = (title) =>
   Article.find({ title: title }).populate("auther").exec();
 
 // find specific article by tag
-const findArticleByTag = (tag) => Article.find({ tages: tag });
+const findArticleByTag = (tag) =>
+  Article.find({ tages: tag }).populate("auther").exec();
 
 // update Article
 const updateImage = (id, imgPath) => {
