@@ -127,6 +127,10 @@ router.post("/follow/:id", auth, async (req, res, next) => {
       user.following.push(req.user.id);
       const updated = await User.updateUser(ID, user);
       res.json(updated);
+    } else {
+      user.following.splice(index, 1);
+      const updated = await User.updateUser(ID, user);
+      res.json(updated);
     }
 
     res.send("Already Follow");
@@ -146,39 +150,6 @@ router.get("/followers", auth, async (req, res, next) => {
     }
 
     res.json(followers);
-  } catch (e) {
-    next(e);
-  }
-});
-
-// unfollow
-router.patch("/unfollow/:id", auth, async (req, res, next) => {
-  try {
-    const ID = req.params.id;
-    if (ID == req.user.id) {
-      res.send("Cannot unFollow yourself");
-    }
-    const user = await User.findUserById(ID);
-    const index = user.following.findIndex((e) => {
-      return req.user.id == e;
-    });
-
-    if (index != -1) {
-      user.following.splice(index, 1);
-      const updated = await User.updateUser(ID, user);
-      res.json(updated);
-    }
-
-    res.send("You Already unfollow");
-  } catch (e) {
-    next(e);
-  }
-});
-
-router.delete("/delete", auth, async (req, res, next) => {
-  try {
-    const user = await User.deleteUserByID(req.user.id);
-    res.json(user);
   } catch (e) {
     next(e);
   }
