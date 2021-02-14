@@ -109,16 +109,6 @@ router.patch(
 
 router.patch("/update/content/:id", auth, async (req, res, next) => {
   try {
-    const article = await Article.findArticleByID(req.params.id);
-    console.log(article);
-    // check author
-    if (article.auther != req.user.id) {
-      res.send("Access Deniad");
-      return;
-    }
-
-    console.log(req.body);
-
     const updated = await Article.updateArticle(req.params.id, req.body);
     res.json(updated);
   } catch (e) {
