@@ -13,7 +13,7 @@ const create = (user) => User.create(user);
 // login
 const login = async ({ username, password }) => {
   // search for user by username
-  const user = await User.findOne({ username: username }).exec();
+  const user = await User.find({ username: username })[0].exec();
 
   // check if user is Authenticated
   if (!user) {
