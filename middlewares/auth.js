@@ -11,7 +11,7 @@ const auth = async (req, res, next) => {
   } = req;
 
   if (!authorization) {
-    next(new Error("UN_AUTHENTICATED"));
+    next(new Error("UN_AUTHENTICATED_Auth"));
   }
 
   try {
@@ -22,7 +22,7 @@ const auth = async (req, res, next) => {
     next();
   } catch (e) {
     console.log(e);
-    next(new Error("UN_AUTHENTICATED"));
+    next(new Error("UN_AUTHENTICATED_Catch"));
   }
 };
 

@@ -118,7 +118,9 @@ router.post("/follow/:id", auth, async (req, res, next) => {
       return;
     }
 
-    const user = await User.findUserById(ID);
+    let user = await User.findUserById(ID);
+    user = user.toJSON();
+
     const index = user.following.findIndex((e) => {
       return req.user.id == e;
     });

@@ -65,7 +65,7 @@ userSchema.pre("save", function (next) {
 });
 
 // check password of user
-userSchema.methods.validatePassword = function validatePassword(password) {
+userSchema.methods.validatePassword = function validatePassword(password) {  
   return bcrypt.compareSync(password, this.password);
 };
 
