@@ -26,8 +26,16 @@ const findArticleByAuthor = (auther) =>
   Article.find({ auther: auther }).populate("auther").exec();
 
 // find specific Article by Title
-const findArticleByTitle = (title) =>
-  Article.find({ title: title }).populate("auther").exec();
+const findArticleByTitle = (key) =>{
+   // get all data
+    const articles = await Article.getAllAricles().populate("auther").exec();
+    // filter by search
+    const res = articles.filter((article) => {
+      return article.title.includes(key.toLowerCase());
+    });
+
+    return res;
+}
 
 // find specific article by tag
 const findArticleByTag = (tag) =>
