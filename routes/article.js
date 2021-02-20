@@ -17,7 +17,7 @@ router.post(
       const image = await cloudinary.uploader.upload(req.file.path);
 
       const article = await Article.creatArticle({
-        title: req.body.title,
+        title: req.body.title.toLowerCase(),
         content: req.body.content,
         image: image.url,
         auther: req.user.id,
