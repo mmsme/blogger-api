@@ -65,15 +65,11 @@ router.patch("/update", auth, async (req, res, next) => {
 });
 
 // find user by Username
-router.get("/name/:username", auth, async (req, res, next) => {
+router.get("/name/:key", auth, async (req, res, next) => {
   try {
-    if (!req.params.username) {
-      console.log("invalid");
-    }
-    const user = await User.findUsersByName(req.params.username);
+    const user = await User.findUsersByName(req.params.key);
     res.json(user);
   } catch (e) {
-    console.log(e);
     next(e);
   }
 });

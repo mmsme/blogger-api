@@ -12,8 +12,9 @@ const create = (user) => User.create(user);
 
 // login
 const login = async ({ username, password }) => {
+  const usernameL = username.toLowerCase();
   // search for user by username
-  const user = await User.findOne({ username: username }).exec();
+  const user = await User.findOne({ username: usernameL }).exec();
   console.log(user);
 
   // check if user is Authenticated
@@ -49,7 +50,17 @@ const updateUser = (id, data) => {
 const findUserByName = (name) => User.findOne({ username: name });
 
 // find All user By Name
-const findUsersByName = (name) => User.find({ username: name });
+const findUsersByName = async (key) => {
+  // get all data
+  const users = await User.find({}).exec();
+  // filter res by key
+  
+  const res1 =  users.filter((user) => {
+    return user.fname.includes(key.toLowerCase()) || user.username.includes(key.toLowerCase()) || user.lname.includes(key.toLowerCase());
+  });
+
+  return res1;
+};
 
 // find user by id
 const findUserById = (id) => User.findById(id).exec();
