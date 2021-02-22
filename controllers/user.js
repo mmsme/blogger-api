@@ -54,16 +54,20 @@ const findUsersByName = async (key) => {
   // get all data
   const users = await User.find({}).exec();
   // filter res by key
-  
-  const res1 =  users.filter((user) => {
-    return user.fname.includes(key.toLowerCase()) || user.username.includes(key.toLowerCase()) || user.lname.includes(key.toLowerCase());
+
+  const res1 = users.filter((user) => {
+    return (
+      user.fname.includes(key.toLowerCase()) ||
+      user.username.includes(key.toLowerCase()) ||
+      user.lname.includes(key.toLowerCase())
+    );
   });
 
   return res1;
 };
 
 // find user by id
-const findUserById = (id) => User.findById(id).exec();
+const findUserById = (id) => User.findById(id).populate("User").exec();
 
 // find all Followers
 const findMyFollowers = (followers) =>
