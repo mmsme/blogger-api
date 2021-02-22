@@ -4,6 +4,7 @@ const router = express.Router();
 const auth = require("../middlewares/auth");
 
 const User = require("../controllers/user");
+const UserModel = require("../models/User");
 
 // show Followers
 router.get("/followers", auth, async (req, res, next) => {
@@ -77,7 +78,10 @@ router.get("/name/:key", auth, async (req, res, next) => {
 // show user's Profile
 router.get("/profile", auth, async (req, res, next) => {
   try {
-    const user = await User.findUserById(req.user.id);
+    const user = await UserModel.findOne({ _id: req.user.id })
+      .populate("following")
+      .exec();
+
     res.json(user);
   } catch (e) {
     next(e);
