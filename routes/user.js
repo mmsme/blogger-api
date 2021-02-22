@@ -77,8 +77,7 @@ router.get("/name/:key", auth, async (req, res, next) => {
 // show user's Profile
 router.get("/profile", auth, async (req, res, next) => {
   try {
-    const user = User.findUserById(req.user.id);
-    res.json(user);
+    res.json(req.user);
   } catch (e) {
     next(e);
   }
