@@ -110,6 +110,19 @@ router.get("/:id", auth, async (req, res, next) => {
   }
 });
 
+// get
+router.get("/userID/:id", auth, async (req, res, next) => {
+  try {
+    const user = await UserModel.findOne({ _id: req.params.id })
+      .populate("following")
+      .exec();
+
+    res.json(user);
+  } catch (e) {
+    next(e);
+  }
+});
+
 // follow specific user
 router.post("/follow/:id", auth, async (req, res, next) => {
   try {

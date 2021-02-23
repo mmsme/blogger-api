@@ -130,8 +130,6 @@ router.post("/like/:id", auth, async (req, res, next) => {
   try {
     const article = await Article.findArticleByID(req.params.id);
 
-    console.log(article);
-
     const index = article.likes.findIndex((c) => {
       return (req.user.id = c);
     });

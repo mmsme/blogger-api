@@ -67,8 +67,7 @@ const findUsersByName = async (key) => {
 };
 
 // find user by id
-const findUserById = (id) =>
-  User.findOne({ _id: id }).populate("following").exec();
+const findUserById = (id) => User.findById(id).exec();
 
 // find all Followers
 const findMyFollowers = (followers) =>
