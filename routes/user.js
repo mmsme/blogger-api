@@ -102,7 +102,7 @@ router.get("/followers", auth, async (req, res, next) => {
 // find user by id
 router.get("/:id", auth, async (req, res, next) => {
   try {
-    const user = await UserModel.findById(id).populate("following").exec();
+    const user = await User.findUserById(req.params.id);
     res.json(user);
   } catch (e) {
     console.log(e);
